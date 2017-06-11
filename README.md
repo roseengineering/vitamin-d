@@ -21,7 +21,7 @@ is called.  This render function will call the first component.
 The component returns a virtual dom which is in turn returned by
 the render function.
 
-The returned virtual dom is then diffed against the current one and sent
+The returned virtual dom is then diffed against the current one and the diff sent
 to the main thread.  The main thread patches the dom using the diff.
 
 To accomplish this the module uses nolanlawson/vdom-serialized-patch and 
