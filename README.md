@@ -10,7 +10,7 @@ Lastly, the module moves the virtual dom generation code out of the
 main thread and into a web worker.  The web worker contains all the components 
 and reducers.  The main thread only receives dom patches and applies them.
 
-An simple counter app, with source code in js/, is provided as an
+A simple counter app, with source code in js/, is provided as an
 example of the framework's use.
 
 
@@ -18,10 +18,10 @@ example of the framework's use.
 
 When a change in the redux state occurs, the render function 
 is called.  This render function will call the first component.
-The component will return a virtual dom which is returned by
+The component will return a virtual dom which is then returned by
 the render function.
 
-The virtual dom is then diffed against the current one and sent
+The virtual dom is diffed against the current one and sent
 to the main thread.  The main thread patches the dom using this diff.
 
 To accomplish this the module uses nolanlawson/vdom-serialized-patch and 
@@ -35,6 +35,7 @@ are prewrapped into the module so they are not required.
 
 1. vitamind provides a hypertext function:
 
+```javascript
      import h from 'vitamind';
      var Dash = function(props, state, children){
          return h('p', null,
@@ -52,6 +53,7 @@ are prewrapped into the module so they are not required.
                'Increment async')
          );
      };
+```
 
 *  If a string is passed as the first parameter then h takes the
    following parameters: (tag, data, children).  This is the vdom
@@ -76,11 +78,13 @@ are prewrapped into the module so they are not required.
 
 2. To create the backend you call connect:  
 
+```javascript
      import { connect } from 'vitamind';
      var render = function(props, state){
          return h('.', null, h(Dash));
      };
      connect(reducer, render, middleware);
+```
 
 
 *  connect takes the following parameters (reducer, render, [ middleware ])
@@ -103,10 +107,12 @@ are prewrapped into the module so they are not required.
 
 3. To create the main thread app call createApp:  
 
+```javascript
      import { createApp } from 'vitamind';
      var worker = workify('./app');
      var dispatch = createApp(document.body, worker);
      dispatch({ type: null });
+```
 
 
 *  This bridges the main thread with the backend web worker.  The
