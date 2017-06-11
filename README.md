@@ -118,7 +118,7 @@ are prewrapped into the module so they are not required.
 
 *  This bridges the main thread with the backend web worker.  The
    function return a dispatch function which can be used to kickoff
-   the first rendering of the app.  The './app' module here is the
+   the first rendering of the app.  The './app' module above is the
    backend module.
 
 
