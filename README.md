@@ -14,7 +14,7 @@ An simple counter app, with source code in js/, is provided as an
 example of the framework's use.
 
 
-##### How it works
+## How it works
 
 When a change in the redux state occurs, the render function 
 is called.  This render function will call the first component.
@@ -31,7 +31,7 @@ The external module files redux.js, vdom-serialized-patch.js, and virtual-dom.js
 are prewrapped into the module so they are not required.
 
 
-##### API
+## API
 
 1. vitamind provides a hypertext function:
 
