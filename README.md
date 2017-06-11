@@ -56,21 +56,22 @@ are prewrapped into the module so they are not required.
 ```
 
 *  If a string is passed as the first parameter then h takes the
-   following parameters: (tag, data, children).  This is the vdom
+   following parameters: (tag, properties, children).  This is the vdom
    syntax.
 
    Since pure functions cannot be passed to the main thread
-   from web workers, functions cannot be used as values for onevent 
-   data object properities.  However if a constant, like a string, is used,
-   then when the event happens a redux dispatch will be called with the 
-   constant as the action and the dom event as the payload
+   from web workers, functions cannot be used as attribute values with the
+   properties object.  However if a constant, like a string, is used
+   for "onevent" values,
+   then when the event occurs a redux action will be dispatch with the 
+   constant as the action type and the dom event as the payload
 
 *  However if a function is passed as the first parameter then h takes the 
-   following parameters: (component, data, children).  This is the component
+   following parameters: (component, properties, children).  This is the component
    syntax.
 
    When this happens, h calls the component function using 
-   (data, state, children) where data and children are from above
+   (properties, state, children) where properties and children are from above
    and the state is the current state of the redux store.
 
    This means you can represent your dom using pure functions.
