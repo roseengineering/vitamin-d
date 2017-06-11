@@ -7,14 +7,14 @@ stateless. The current redux state is passed to them every time
 they are called.  No this.setState stuff.
 
 Lastly, the module moves the virtual dom generation code out of the
-main thread into a web worker.  The web worker contains all the components 
+main thread and into a web worker.  The web worker contains all the components 
 and reducers.  The main thread only receives dom patches and applies them.
 
 An simple counter app, with source code in js/, is provided as an
 example of the framework's use.
 
 
-** How it works
+##### How it works
 
 When a change in the redux state occurs, the render function 
 is called.  This render function will call the first component.
@@ -31,9 +31,9 @@ The external module files redux.js, vdom-serialized-patch.js, and virtual-dom.js
 are prewrapped into the module so they are not required.
 
 
-** API
+##### API
 
-vitamind provides a hypertext function:
+1. vitamind provides a hypertext function:
 
      import h from 'vitamind';
      var Dash = function(props, state, children){
@@ -53,7 +53,7 @@ vitamind provides a hypertext function:
          );
      };
 
-1. If a string is passed as the first parameter then h takes the
+*  If a string is passed as the first parameter then h takes the
    following parameters: (tag, data, children).  This is the vdom
    syntax.
 
@@ -63,7 +63,7 @@ vitamind provides a hypertext function:
    then when the event happens a redux dispatch will be called with the 
    constant as the action and the dom event as the payload
 
-2. However if a function is passed as the first parameter then h takes the 
+*  However if a function is passed as the first parameter then h takes the 
    following parameters: (component, data, children).  This is the component
    syntax.
 
@@ -74,7 +74,7 @@ vitamind provides a hypertext function:
    This means you can represent your dom using pure functions.
 
 
-To create the backend you call connect:  
+2. To create the backend you call connect:  
 
      import { connect } from 'vitamind';
      var render = function(props, state){
@@ -83,7 +83,7 @@ To create the backend you call connect:
      connect(reducer, render, middleware);
 
 
-1. connect takes the following parameters (reducer, render, [ middleware ])
+*  connect takes the following parameters (reducer, render, [ middleware ])
    where render is a function that returns the vdom from your base component 
    and reducer is your base redux reducer.
 
@@ -91,9 +91,9 @@ To create the backend you call connect:
    (action, dispatch) to intercept actions dispatched from the main 
    thread.  Since pure functions cannot cross over from the main thread 
    to web workers the redux thunk middleware cannot be used.  So this
-   middleware function is used instead.
+   middleware function is used instead.  This is where you can call dispatch.
 
-2. connect() uses these arguments to set up the web worker background
+*  connect() uses these arguments to set up the web worker background
    code.  This code is then passed to Worker() either through a blob 
    or a url.  So connect does not need to return anything.  But as a 
    convenience connect returns a mock web worker object.  This
@@ -101,14 +101,17 @@ To create the backend you call connect:
    main thead if needed.
 
 
-To create the main thread app call createApp:  
+3. To create the main thread app call createApp:  
 
      import { createApp } from 'vitamind';
      var worker = workify('./app');
-     createApp(document.body, worker);
+     var dispatch = createApp(document.body, worker);
+     dispatch({ type: null });
 
 
-This bridges the main thread with the backend web worker and starts the app.
+*  This bridges the main thread with the backend web worker.  The
+   function return a dispatch function which can be used to kickoff
+   the first rendering of the app.
 
 
 Copyright 2017 roseengineering
