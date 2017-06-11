@@ -66,7 +66,7 @@ are prewrapped into the module so they are not required.
    then when the event occurs a redux action will be dispatch with the 
    constant as the action type and the dom event as the payload
 
-*  However if a function is passed as the first parameter then h takes the 
+*  If a function is passed as the first parameter then h takes the 
    following parameters: (component, properties, children).  This is the component
    syntax.
 
