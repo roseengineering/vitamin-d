@@ -4,7 +4,7 @@ for creating single page javascript apps.
 
 The module uses pure functions for components.  The components are also
 stateless. The current redux state is passed to them every time 
-they are called.  No this.setState stuff.
+they are called.  So no this.state stuff.
 
 Lastly, the module moves the virtual dom generation code out of the
 main thread and into a web worker.  The web worker contains all the components 
