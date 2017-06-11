@@ -18,10 +18,10 @@ example of the framework's use.
 
 When a change in the redux state occurs, the render function 
 is called.  This render function will call the first component.
-The component will return a virtual dom which is then returned by
+The component returns a virtual dom which is then returned by
 the render function.
 
-The virtual dom is diffed against the current one and sent
+This virtual dom is diffed against the current one and sent
 to the main thread.  The main thread patches the dom using this diff.
 
 To accomplish this the module uses nolanlawson/vdom-serialized-patch and 
